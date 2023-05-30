@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const { v4: uuidv4 } = require('uuid')
 
 const projectsSchema = new Schema({
     name: {
@@ -15,11 +16,15 @@ const projectsSchema = new Schema({
             type: String,
             required: true
         },
-        id: {
+        email: {
             type: String,
             required: true
         }
     }],
+    inviteCode: {
+        type: Schema.Types.UUID,
+        default: uuidv4()
+    },
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Tasks' }]
 })
 
