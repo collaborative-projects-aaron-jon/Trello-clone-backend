@@ -52,9 +52,9 @@ router.post('/', async (req, res) => {
 
 router.post('/join', async (req, res) => {
     try {
-        const { inviteCode, name, email, avatarUrl } = req.body;
+        const { inviteId, name, email, avatarUrl } = req.body;
         const project = await Projects.findOne({
-            inviteCode
+            _id: inviteId
         });
         const joiningMember = {
             name,
