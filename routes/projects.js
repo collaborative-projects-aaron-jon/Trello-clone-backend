@@ -34,6 +34,27 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:projectId', async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const project = await Projects.findOne({
+            _id: projectId
+        });
+        res.json({
+            success: true,
+            data: {
+                project
+            }
+        })
+    } catch(err) {
+        console.log('err: ', err)
+        res.json({
+            success: false,
+            error: err
+        })
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const { email, name, projectName, avatarUrl } = req.body;
@@ -45,6 +66,35 @@ router.post('/', async (req, res) => {
                 email
             }]
         });
+        res.json({
+            success: true,
+            data: {
+                project
+            }
+        })
+    } catch(err) {
+        console.log('err: ', err);
+        res.json({
+            success: false,
+            error: err
+        })
+    }
+});
+
+
+router.post('/:projectId/tasks', async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const { taskName } = req.body;
+        const project = await Projects.findOne({
+            _id: projectId
+        });
+        const task = {
+            projectId,
+            name: taskName
+        }
+        project.tasks.push(task)
+        await project.save();
         res.json({
             success: true,
             data: {
