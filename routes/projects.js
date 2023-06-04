@@ -7,18 +7,13 @@ router.get('/', async (req, res) => {
         const allProjects = await Projects.find();
         const relevent = allProjects.filter(project => {
             let isRelevent = false
-            console.log(project.members)
             project.members.map(member => {
-                console.log('member.email: ', member.email)
-                console.log('userEmail: ', userEmail)
                 if(member.email === userEmail){
                     isRelevent = true
                 }
             })
-            console.log(isRelevent)
             return isRelevent;
         })
-        console.log(relevent);
         res.json({
             success: true,
             data: {
